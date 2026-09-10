@@ -148,3 +148,13 @@ def test_signature_kind_and_pixel_limits(tmp_path: Path) -> None:
     assert {"UNRECOGNIZED_MEDIA", "MEDIA_KIND_MISMATCH", "PIXEL_LIMIT", "ABSOLUTE_PATH"} <= codes(
         result
     )
+
+
+def test_non_reference_image_fields_are_not_treated_as_paths(tmp_path: Path) -> None:
+    manifest = tmp_path / "manifest.jsonl"
+    write_manifest(manifest, [{"image_caption": "a cat on a chair", "image_count": 1}])
+
+    result = scan_manifest(manifest)
+
+    assert result.references == 0
+    assert result.diagnostics == []

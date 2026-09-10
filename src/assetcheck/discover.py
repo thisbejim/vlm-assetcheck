@@ -35,6 +35,7 @@ _AUDIO_KEYS = {
     "audio_path",
     "audio_paths",
     "input_audio",
+    "audio_data",
 }
 _VIDEO_KEYS = {
     "video",
@@ -44,6 +45,7 @@ _VIDEO_KEYS = {
     "video_path",
     "video_paths",
     "input_video",
+    "video_data",
 }
 _GENERIC_KEYS = {
     "media",
@@ -92,11 +94,23 @@ def pointer_join(pointer: str, token: str | int) -> str:
 
 def _key_kind(key: str) -> str | None:
     normalized = key.casefold().replace("-", "_")
-    if normalized in _IMAGE_KEYS or normalized.startswith("image_"):
+    if (
+        normalized in _IMAGE_KEYS
+        or normalized.startswith("image_")
+        and normalized.endswith(("_url", "_urls", "_path", "_paths", "_file", "_files", "_data"))
+    ):
         return "image"
-    if normalized in _AUDIO_KEYS or normalized.startswith("audio_"):
+    if (
+        normalized in _AUDIO_KEYS
+        or normalized.startswith("audio_")
+        and normalized.endswith(("_url", "_urls", "_path", "_paths", "_file", "_files", "_data"))
+    ):
         return "audio"
-    if normalized in _VIDEO_KEYS or normalized.startswith("video_"):
+    if (
+        normalized in _VIDEO_KEYS
+        or normalized.startswith("video_")
+        and normalized.endswith(("_url", "_urls", "_path", "_paths", "_file", "_files", "_data"))
+    ):
         return "video"
     if normalized in _GENERIC_KEYS:
         return "unknown"
