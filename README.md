@@ -13,7 +13,7 @@ Vision-language datasets often keep annotation JSONL and media in separate trees
 Requires Python 3.10+.
 
 ```bash
-python -m pip install vlm-assetcheck
+python -m pip install "git+https://github.com/thisbejim/vlm-assetcheck.git"
 assetcheck examples/manifest.jsonl --check-placeholders
 ```
 
